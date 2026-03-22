@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Nạp game</title>
+</head>
+<body>
+  <h2>Nạp tiền</h2>
+
+  <select id="type">
+    <option value="card">Thẻ cào</option>
+    <option value="zing">ZingPay</option>
+  </select>
+
+  <input type="text" id="code" placeholder="Mã thẻ">
+  <input type="text" id="serial" placeholder="Serial">
+  <input type="text" id="username" placeholder="Username">
+
+  <button onclick="napTien()">Nạp</button>
+
+  <script>
+    async function napTien() {
+      const type = document.getElementById("type").value;
+      const code = document.getElementById("code").value;
+      const serial = document.getElementById("serial").value;
+      const username = document.getElementById("username").value;
+
+      const res = await fetch("http://localhost:3000/nap-tien", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          type,
+          username,
+          code,
+          serial,
+          card_code: code,
+          card_serial: serial
+        })
+      });
+
+      const data = await res.json();
+      alert(JSON.stringify(data));
+    }
+  </script>
+</body>
+</html>
